@@ -1,0 +1,42 @@
+#!/bin/sh
+
+. /lib/functions.sh
+
+setup_mtswifi_iface() {
+    local iface="$1"
+    local device band ssid
+
+    config_get device "$iface" device
+    [ -n "$device" ] || return
+
+    config_get band "$device" band
+
+    case "$band" in
+    2g)
+        ssid='MTSWIFI_2.4G'
+        ;;
+    *)
+        ssid='MTSWIFI'
+        ;;
+    esac
+
+    uci set "wireless.${device}.disabled=0"
+
+    uci set "wireless.${iface}.mode=ap"
+    uci set "wireless.${iface}.network=lan"
+    uci set "wireless.${iface}.ssid=${ssid}"
+    uci set "wireless.${iface}.encryption=psk2"
+    uci set "wireless.${iface}.key=12345678"
+
+    uci set "wireless.${iface}.disabled=0"
+}
+
+case "$(board_name)" in
+glinet,gl-mt3600be)
+    config_load wireless
+    config_foreach setup_mtswifi_iface wifi-iface
+    uci commit wireless
+    ;;
+esac
+
+exit 0
