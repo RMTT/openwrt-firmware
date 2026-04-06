@@ -45,25 +45,19 @@ jobs:
       - name: Configure GL-MT3600BE build
         working-directory: openwrt
         run: |
-          rm -f .config
-          cat <<'EOF' > .config
-          CONFIG_TARGET_mediatek=y
-          CONFIG_TARGET_mediatek_filogic=y
-          CONFIG_TARGET_mediatek_filogic_DEVICE_glinet_gl-mt3600be=y
-
-          CONFIG_TARGET_ROOTFS_SQUASHFS=y
-          CONFIG_TARGET_ROOTFS_INITRAMFS=y
-          CONFIG_PACKAGE_kmod-mt7990-firmware=y
-          CONFIG_PACKAGE_mt7987-2p5g-phy-firmware=y
-          CONFIG_PACKAGE_kmod-hwmon-pwmfan=y
-          EOF
+          cp ../configs/mt3600be .config
           make defconfig
           ./scripts/diffconfig.sh | tee diffconfig.txt
+
+      - name: Copy custom files
+        working-directory: openwrt
+        run: |
+          cp -r ../files .
 
       - name: Build firmware
         working-directory: openwrt
         run: |
-          make -j"$(nproc)" download clean world V=s
+          make -j"$(nproc)" download clean world
 
       - name: Upload firmware artifacts
         uses: actions/upload-artifact@v4
