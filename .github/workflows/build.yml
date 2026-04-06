@@ -29,35 +29,9 @@ jobs:
           gcc-multilib g++-multilib gettext git libncurses5-dev libssl-dev \
           python3-setuptools rsync swig unzip zlib1g-dev file wget
 
-      - name: Apply local OpenWrt patch
-        working-directory: openwrt
+      - name: Build
         run: |
-          PATCH=../patches/openwrt/0001-mediatek-add-gl-mt3600be-support.patch
-          git apply "$PATCH"
-          cp -r ../files .
-
-      - name: Update and install feeds
-        working-directory: openwrt
-        run: |
-          ./scripts/feeds update -a
-          ./scripts/feeds install -a
-
-      - name: Configure GL-MT3600BE build
-        working-directory: openwrt
-        run: |
-          cp ../configs/mt3600be .config
-          make defconfig
-          ./scripts/diffconfig.sh | tee diffconfig.txt
-
-      - name: Copy custom files
-        working-directory: openwrt
-        run: |
-          cp -r ../files .
-
-      - name: Build firmware
-        working-directory: openwrt
-        run: |
-          make -j"$(nproc)" download clean world
+          ./build.sh
 
       - name: Upload firmware artifacts
         uses: actions/upload-artifact@v4
