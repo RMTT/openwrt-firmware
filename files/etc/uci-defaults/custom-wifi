@@ -4,10 +4,13 @@
 
 setup_mtswifi_iface() {
     local iface="$1"
-    local device band ssid
+    local device band original_ssid ssid
 
     config_get device "$iface" device
     [ -n "$device" ] || return
+
+    config_get original_ssid "$iface" ssid
+    [ "$original_ssid" = "OpenWrt" ] || return
 
     config_get band "$device" band
 
