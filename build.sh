@@ -24,7 +24,6 @@ target="$1"
 openwrt_dir="$repo_root/openwrt"
 patches_dir="$repo_root/patches"
 target_config_dir="$repo_root/configs/$target"
-common_packages="$repo_root/configs/common-packages"
 files_path="$repo_root/files"
 toolchain_dir="$repo_root/toolchain"
 
@@ -100,16 +99,6 @@ printf 'Updating and installing feeds...\n'
 
 printf 'Configuring %s build...\n' "$target"
 cp "$config_file" .config
-
-if [[ -f "$common_packages" ]]; then
-    pkg_count=0
-    while IFS= read -r pkg; do
-        [[ -z "$pkg" || "$pkg" == \#* ]] && continue
-        printf 'CONFIG_PACKAGE_%s=y\n' "$pkg" >> .config
-        pkg_count=$((pkg_count + 1))
-    done < "$common_packages"
-    printf 'Added %d common package(s) to config.\n' "$pkg_count"
-fi
 
 make defconfig
 ./scripts/diffconfig.sh | tee diffconfig.txt
