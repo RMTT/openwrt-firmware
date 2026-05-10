@@ -7,4 +7,4 @@ if [ -z "$(docker images -q $IMAGE_NAME 2>/dev/null)" ]; then
     docker build . -t openwrt-builder
 fi
 
-docker run -v ./:/workspace -u "$(id -u)":"$(id -g)" -it openwrt-builder bash
+docker run --net host -v ./:/workspace -u "$(id -u)":"$(id -g)" -it openwrt-builder bash

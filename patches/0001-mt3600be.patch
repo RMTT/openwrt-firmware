@@ -1,4 +1,4 @@
-From bfd4a7d05eaa4139006fcbba71faf2e21f83464a Mon Sep 17 00:00:00 2001
+From c8aa9beb4379f7e742350d44a0c150e98c99e2cd Mon Sep 17 00:00:00 2001
 From: Tianling Shen <cnsztl@immortalwrt.org>
 Date: Wed, 18 Mar 2026 17:49:56 +0800
 Subject: [PATCH] mediatek: add GL.iNET GL-MT3600BE support
@@ -20,6 +20,8 @@ Flash instructions:
   3. Visit http://192.168.1.1 and upload sysupgrade.bin
 
 Signed-off-by: Tianling Shen <cnsztl@immortalwrt.org>
+Link: https://github.com/openwrt/openwrt/pull/22476
+Signed-off-by: Hauke Mehrtens <hauke@hauke-m.de>
 ---
  .../dts/mt7987a-glinet-gl-mt3600be.dts        | 292 ++++++++++++++++++
  .../filogic/base-files/etc/board.d/02_network |   1 +
@@ -29,7 +31,7 @@ Signed-off-by: Tianling Shen <cnsztl@immortalwrt.org>
 
 diff --git a/target/linux/mediatek/dts/mt7987a-glinet-gl-mt3600be.dts b/target/linux/mediatek/dts/mt7987a-glinet-gl-mt3600be.dts
 new file mode 100644
-index 0000000000..784e134fff
+index 00000000000000..784e134fff44a7
 --- /dev/null
 +++ b/target/linux/mediatek/dts/mt7987a-glinet-gl-mt3600be.dts
 @@ -0,0 +1,292 @@
@@ -326,10 +328,10 @@ index 0000000000..784e134fff
 +	status = "okay";
 +};
 diff --git a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
-index dca52e4c20..53671e17a2 100644
+index 2d5bc24164d83a..9fa03a8edcc6a3 100644
 --- a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
 +++ b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
-@@ -137,6 +137,7 @@ mediatek_setup_interfaces()
+@@ -142,6 +142,7 @@ mediatek_setup_interfaces()
  	glinet,gl-mt2500|\
  	glinet,gl-mt2500-airoha|\
  	glinet,gl-mt3000|\
@@ -338,10 +340,10 @@ index dca52e4c20..53671e17a2 100644
  	glinet,gl-xe3000|\
  	openembed,som7981|\
 diff --git a/target/linux/mediatek/image/filogic.mk b/target/linux/mediatek/image/filogic.mk
-index 29c8c3d657..4aafe9aec0 100644
+index 77c8055d606e83..c75301c111c1d6 100644
 --- a/target/linux/mediatek/image/filogic.mk
 +++ b/target/linux/mediatek/image/filogic.mk
-@@ -1522,6 +1522,27 @@ define Device/glinet_gl-mt3000
+@@ -1654,6 +1654,27 @@ define Device/glinet_gl-mt3000
  endef
  TARGET_DEVICES += glinet_gl-mt3000
  
@@ -369,6 +371,3 @@ index 29c8c3d657..4aafe9aec0 100644
  define Device/glinet_gl-mt6000
    DEVICE_VENDOR := GL.iNet
    DEVICE_MODEL := GL-MT6000
--- 
-2.53.0
-
