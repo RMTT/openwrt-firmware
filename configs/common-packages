@@ -74,3 +74,6 @@ bzip2
 vim-full
 tcpdump
 bridge
+nginx-full
+nginx
+luci-nginx
