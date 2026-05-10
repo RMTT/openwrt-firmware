@@ -111,20 +111,20 @@ if [[ -f "$common_packages" ]]; then
     printf 'Added %d common package(s) to config.\n' "$pkg_count"
 fi
 
+make defconfig
+./scripts/diffconfig.sh | tee diffconfig.txt
+
 printf 'setup external toolchain...\n'
 ./scripts/ext-toolchain.sh \
          --toolchain "$toolchain_dir"/toolchain-* \
          --overwrite-config \
          --config "$target"
 
-make defconfig
-./scripts/diffconfig.sh | tee diffconfig.txt
-
 printf 'Copying custom files...\n'
 rm -rf files
 cp -r "$files_path" files
 
 printf 'Building firmware...\n'
-make -j8 download clean world
+make -j8 download world
 
 printf 'Build complete. Artifacts are under: %s\n' "$artifact_dir"

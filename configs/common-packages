@@ -1,10 +1,3 @@
-luci
-tailscale
-luci-app-tailscale-community
-adguardhome
-luci-app-adguardhome
-bind-dig
-
 kmod-wireguard
 kmod-tun
 kmod-ipsec
@@ -19,6 +12,16 @@ kmod-nft-compat
 kmod-ipt-core
 kmod-ipt-ipsec
 kmod-ikconfig
+kmod-usb-storage
+kmod-usb3
+kmod-fs-ext4
+
+luci
+tailscale
+luci-app-tailscale-community
+adguardhome
+luci-app-adguardhome
+bind-dig
 
 cgroupfs-mount
 cgroup-tools
@@ -59,3 +62,15 @@ lxc-user-nic
 lxc-usernsexec 
 lxc-wait
 rpcd-mod-lxc
+
+lsblk
+ca-certificates
+block-mount
+e2fsprogs
+tar
+zstd
+xz
+bzip2
+vim-full
+tcpdump
+bridge

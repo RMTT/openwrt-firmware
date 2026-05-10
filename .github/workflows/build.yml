@@ -37,6 +37,6 @@ jobs:
       - name: Upload firmware artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: firmware-${{ matrix.target }}
+          name: firmware-${{ replace(matrix.target, '/', '-') }}
           path: |
             openwrt/bin/targets/${{ matrix.target }}/**
